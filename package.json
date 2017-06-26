@@ -1,0 +1,36 @@
+{
+  "name": "roam",
+  "version": "0.1.0",
+  "description": "A full-stack travel application.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pg": "^6.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start": "nodemon app.js",
+    "init": "npm i && npm run db:create && npm run db:reset",
+    "db:create": "createdb roam",
+    "db:drop": "dropdb roam",
+    "db:reset": "psql -d roam < ./db/schema.sql && psql -d seeds.sql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lumodon/roam.git"
+  },
+  "keywords": [],
+  "author": "Greg Wong, Serafin Wesnidge",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lumodon/roam/issues"
+  },
+  "homepage": "https://github.com/lumodon/roam#readme"
+}
