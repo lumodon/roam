@@ -18,6 +18,15 @@ router.get('/new-post', (request, response) => {
   response.render('new-post')
 })
 
+
+router.get('/post', (request, response) => {
+  response.render('post')
+})
+
+router.get('/profile', (request, response) => {
+  response.render('profile')
+})
+
 router.post('/sign-up', (request, response) => {
   User.addUser(request.body.email, request.body.password, rows => {
     console.log('result rows', rows)
@@ -27,3 +36,4 @@ router.post('/sign-up', (request, response) => {
 })
 
 module.exports = router
+
