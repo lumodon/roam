@@ -14,7 +14,7 @@ app.set('view engine', 'ejs')
 app.use(bodyParser.json())
 bodyParser.urlencoded({ extended: false })
 
-app.use(express.static('/public'))
+app.use(express.static('public'))
 app.use('/', index)
 
 app.listen(port, () => {

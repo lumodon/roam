@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<body>
-  <form method="post" action="/sign-in">
+  <% include partials/header %>
+  <body>
     <div>
-      <div>
-        email: <input type="email" name="email" placeholder="john@email.com" required>
-      </div>
-      <div>
-        password: <input type="password" name="password" placeholder="password" required>
-      </div>
-      <div>
-        <input type="submit" value="Sign In">
-      </div>
+      <form method="post" action="/sign-in">
+        <div>
+          <div>
+            email: <input type="email" name="email" placeholder="john@email.com" required>
+          </div>
+          <div>
+            password: <input type="password" name="password" placeholder="password" required>
+          </div>
+          <div>
+            <input type="submit" value="Sign In">
+          </div>
+        </div>
+      </form>
     </div>
-  </form>
-</body>
-
+  </body>
 </html>

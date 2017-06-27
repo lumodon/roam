@@ -17,4 +17,12 @@ router.get('/new-post', (request, response) => {
   response.render('new-post')
 })
 
+router.get('/post', (request, response) => {
+  response.render('post')
+})
+
+router.get('/profile', (request, response) => {
+  response.render('profile')
+})
+
 module.exports = router
