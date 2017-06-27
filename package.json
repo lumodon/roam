@@ -23,7 +23,7 @@
     "init": "npm i && npm run db:create && npm run db:reset",
     "db:create": "createdb roam",
     "db:drop": "dropdb roam",
-    "db:reset": "psql -d roam < ./db/schema.sql && psql -d seeds.sql"
+    "db:reset": "psql -d roam < ./db/schema.sql && psql -d roam < ./db/seed.sql"
   },
   "repository": {
     "type": "git",
