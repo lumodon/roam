@@ -11,8 +11,9 @@ const app = express()
 app.use(favicon(path.join(__dirname, 'public', 'images', 'maps.ico')))
 
 app.set('view engine', 'ejs')
-app.use(bodyParser.json())
-bodyParser.urlencoded({ extended: false })
+
+
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(express.static('/public'))
 app.use('/', index)
