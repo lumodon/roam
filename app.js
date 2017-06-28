@@ -15,10 +15,10 @@ const User = require('./db/models/user')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const session = require('express-session')
-const cookieParser = require('cookie-parser')
+// const cookieParser = require('cookie-parser')   // as of 1.5.0 cookie-parser may result in conflicts
 
 app.use(express.static('public'))
-app.use(cookieParser())
+// app.use(cookieParser())   // as of 1.5.0 cookie-parser may result in conflicts
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
@@ -46,11 +46,12 @@ passport.use('local-login', new LocalStrategy({
   session: true
 }, (request, email, password, done) => {
   User.findByEmail(email, userData => {
-    console.log('Im in the callback', userData)
     if(userData) {
-      request.session.userId = userData.id
-      request.session.userEmail = userData.email
-      request.session.userJoinDate = userData.timestamp
+      // request.session.user = {
+      //   userId: userData.id,
+      //   userEmail: userData.email,
+      //   userJoinDate: userData.timestamp
+      // }
 
       done(null, userData) // What is done?!
     } else {
@@ -71,7 +72,6 @@ passport.use('local-signup', new LocalStrategy({
         done(null, false, 'Email already exists')
       } else {
         User.addUser(email, password, result => {
-          console.log(result)
           done(null, result)
         })
       }

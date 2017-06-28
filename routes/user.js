@@ -4,45 +4,47 @@ const { authorization } = require('./auth')
 
 module.exports = (passport) => {
 
+
   router.get('/', (request, response) => {
-    response.render('index')
+    console.log('request', request.user)
+    response.render('index', {user: request.user })
   })
 
   router.post('/sign-in', passport.authenticate('local-login', {
-      successRedirect: '/',
-      failureRedirect: '/sign-in'
-    })
-  )
+    successRedirect: '/',
+    failureRedirect: '/sign-in'
+  }))
 
   router.get('/sign-in', (request, response) => {
-    response.render('sign-in')
+    if(request.user) {
+      response.redirect('/')
+    } else {
+      response.render('sign-in', {user: request.user })
+    }
   })
 
   router.get('/sign-up', (request, response) => {
-    response.render('sign-up')
+    if(request.user) {
+      response.redirect('/')
+    } else {
+      response.render('sign-up', {user: request.user })
+    }
   })
 
   router.get('/sign-out', (request, response) => {
-    request.logout() // Look up?
-    request.session = null
-    let cookie = request.cookies
-    for (let prop in cookie) {
-      response.cookie(prop, '', {expires: new Date(0)})
-    }
-    response.redirect('/')
+    request.session.destroy((result) => {
+      response.redirect('/')
+    })
   })
 
   router.get('/new-post', (request, response) => {
-    response.render('new-post')
+    response.render('new-post', {user: request.user })
   })
 
-  router.post('/sign-up', (request, response) => {
-    User.addUser(request.body.email, request.body.password, rows => {
-      console.log('result rows', rows)
-      // response.render('index')
-      response.send(rows)
-    })
-  })
+  router.post('/sign-up', passport.authenticate('local-signup', {
+    successRedirect: '/',
+    failureRedirect: '/sign-up'
+  }))
 
   return router
 }
