@@ -15,14 +15,12 @@ const User = require('./db/models/user')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const session = require('express-session')
-// const cookieParser = require('cookie-parser')   // as of 1.5.0 cookie-parser may result in conflicts
 
 app.use(express.static('public'))
-// app.use(cookieParser())   // as of 1.5.0 cookie-parser may result in conflicts
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
-  saveUninitialized: false, // look me up
+  saveUninitialized: false, // Ask Punit
   expires: Date.now() * MILLISECONDS_PER_DAY * 30
 }))
 
@@ -30,12 +28,16 @@ app.use(passport.initialize()) // look me up
 app.use(passport.session()) // look me up
 
 passport.serializeUser((user, done) => {
-  done(null, user.id) // look me up
+  done(null, user.id)
 })
+
+// Where is info being sent to and from?
+// Where does done send the info? why user.id and not just user?
+// Where does deserialize send it's "done" info? why does it send the entire DB response?
 
 passport.deserializeUser( (id, done) => {
   User.findById(id, userData => {
-    done(null, userData) // Look me up ENTRIE THING
+    done(null, userData)
   })
 })
 
@@ -47,15 +49,19 @@ passport.use('local-login', new LocalStrategy({
 }, (request, email, password, done) => {
   User.findByEmail(email, userData => {
     if(userData) {
+
+      // Why don't I need this? Where is "request.user" getting 
+      // created if this chunk of code isn't neccesary?
+
       // request.session.user = {
       //   userId: userData.id,
       //   userEmail: userData.email,
       //   userJoinDate: userData.timestamp
       // }
 
-      done(null, userData) // What is done?!
+      done(null, userData)
     } else {
-      done(null, false, 'No user found.')
+      done(null, false, {message: 'No user found.'})
     }
   })
 }))
@@ -66,10 +72,10 @@ passport.use('local-signup', new LocalStrategy({
   passReqToCallback: true,
   session: true
 }, (request, email, password, done) => {
-  process.nextTick(() => { // What are you?!
+  process.nextTick(() => { // Ask Punit - how much do we need to know?
     User.findByEmail(email, userData => {
       if(userData) {
-        done(null, false, 'Email already exists')
+        done(null, false, {message: 'Email already exists'})
       } else {
         User.addUser(email, password, result => {
           done(null, result)
