@@ -18,7 +18,7 @@ const session = require('express-session')
 
 app.use(express.static('public'))
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || "blah",
   resave: true,
   saveUninitialized: false, // Ask Punit
   expires: Date.now() * MILLISECONDS_PER_DAY * 30

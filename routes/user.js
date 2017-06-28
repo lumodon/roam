@@ -4,7 +4,6 @@ const { authorization } = require('./auth')
 
 module.exports = (passport) => {
 
-
   router.get('/', (request, response) => {
     console.log('request', request.user)
     response.render('index', {user: request.user })

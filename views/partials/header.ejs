@@ -8,6 +8,9 @@
 <body>
     <div class="siteNav">
       <a href="/" style="text-decoration:none"><h3>Roam</h3></a>
+      <% if ( typeof city === "object" && city ) { %>
+        <h3 class="city-header"><%= city.name %></h3>
+      <% } %>
       <% if(!user) { %>
         <span>
           <form action="/sign-in">
