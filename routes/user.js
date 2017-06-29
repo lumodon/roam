@@ -4,7 +4,6 @@ const { authorization } = require('./auth')
 
 module.exports = (passport) => {
 
-
   router.get('/', (request, response) => {
     response.render('index', {user: request.user, message: request.flash('loginMessage', ) })
   })
