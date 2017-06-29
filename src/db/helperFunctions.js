@@ -8,7 +8,6 @@ module.exports = {
         console.log("QUERY <- !!ERROR!!")
         console.error(error)
       } else {
-        console.log(result.rows[0])
         callback(result.rows[0])
       }
     })

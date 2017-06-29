@@ -1,0 +1,28 @@
+.posts-container {
+  float: right;
+}
+
+.individual-post {
+  cursor: pointer;
+}
+
+.nav-fix {
+  padding-top: 120px;
+}
+
+.divider {
+  border-left: 1px solid gray;
+  width: 2px;
+  height:50px;
+}
+
+.brand {
+  font-size: 2.3em;
+  color: #537fc7 !important;
+  text-shadow: 1px 2px 3px #0002a0;
+}
+
+.alert {
+  margin: 12px;
+  display: inline-block;
+}

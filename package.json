@@ -4,10 +4,13 @@
   "description": "A full-stack travel application.",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "connect-flash": "^0.1.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.3",
+    "express-flash": "0.0.2",
     "express-session": "^1.15.3",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
@@ -19,12 +22,12 @@
     "nodemon": "^1.11.0"
   },
   "scripts": {
-    "start": "node app.js",
-    "start:dev": "nodemon app.js",
+    "start": "node ./src/app.js",
+    "start:dev": "nodemon ./src/app.js",
     "init": "npm i && npm run db:create && npm run db:reset",
     "db:create": "createdb roam",
     "db:drop": "dropdb roam",
-    "db:reset": "psql -d roam < ./db/schema.sql && psql -d roam < ./db/seed.sql"
+    "db:reset": "psql -d roam < ./src/db/sql/schema.sql && psql -d roam < ./src/db/sql/seed.sql"
   },
   "repository": {
     "type": "git",
