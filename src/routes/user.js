@@ -8,27 +8,34 @@ module.exports = (passport) => {
     response.render('index', {user: request.user, message: request.flash('loginMessage', ) })
   })
 
-  router.post('/sign-in', passport.authenticate('local-login', {
-    successRedirect: '/',
-    failureRedirect: '/sign-in',
-    failureFlash: true
-  }))
-
-  router.get('/sign-in', (request, response) => {
+  router.route('/sign-in')
+  .get((request, response) => {
     if(request.user) {
       response.redirect('/')
     } else {
       response.render('sign-in', {user: request.user, message: request.flash('loginMessage', ) })
     }
   })
+  .post(passport.authenticate('local-login', {
+    successRedirect: '/',
+    failureRedirect: '/sign-in',
+    failureFlash: true
+  }))
 
-  router.get('/sign-up', (request, response) => {
+
+  router.route('/sign-up')
+  .get((request, response) => {
     if(request.user) {
       response.redirect('/')
     } else {
       response.render('sign-up', {user: request.user, message: request.flash('loginMessage', ) })
     }
   })
+  .post(passport.authenticate('local-signup', {
+    successRedirect: '/',
+    failureRedirect: '/sign-up',
+    failureFlash: true
+  }))
 
   router.get('/sign-out', (request, response) => {
     request.session.destroy((result) => {
@@ -40,11 +47,6 @@ module.exports = (passport) => {
     response.render('new-post', {user: request.user, message: request.flash('loginMessage', ) })
   })
 
-  router.post('/sign-up', passport.authenticate('local-signup', {
-    successRedirect: '/',
-    failureRedirect: '/sign-up',
-    failureFlash: true
-  }))
 
   return router
 }
