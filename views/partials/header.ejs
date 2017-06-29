@@ -2,29 +2,28 @@
   <title>Roam</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href="/styles/style.css" rel="stylesheet">
   <script src="/scripts/main.js"></script>
 </head>
 <body>
-    <div class="siteNav">
-      <a href="/" style="text-decoration:none"><h3>Roam</h3></a>
+  <div class="container-fluid">
+    <nav class="siteNav navbar navbar-default">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Roam</a>
+      </div>
       <% if(!user) { %>
-        <span>
-          <form action="/sign-in">
-            <input type="submit" value="Sign In">
-          </form>
-        </span>
-        <span>
-          <form action="/sign-up">
-            <input type="submit" value="Sign Up">
-          </form>
-        </span>
+        <div class="nav navbar-nav">
+          <input class='form-control' type="submit" value="Sign In">
+        </div>
+        <div class="nav navbar-nav">
+          <input class='form-control' type="submit" value="Sign Up">
+        </div>
       <% } else { %>
-        <span>
-          <form action="/sign-out">
-            <input type="submit" value="Sign Out">
-          </form>
-        </span>
+        <div class="nav navbar-nav">
+          <input class='form-control' type="submit" value="Sign Out">
+        </div>
       <% } %>
-    </div>
+    </nav>
+  </div>
 </body>

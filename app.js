@@ -9,13 +9,15 @@ const path = require('path')
 const port = process.env.PORT || 3000
 const app = express()
 const User = require('./db/models/user')
+const bcrypt = require('bcrypt')
+const flash = require('connect-flash')
 
 // Passport
-
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const session = require('express-session')
 
+app.use(flash())
 app.use(express.static('public'))
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -24,8 +26,8 @@ app.use(session({
   expires: Date.now() * MILLISECONDS_PER_DAY * 30
 }))
 
-app.use(passport.initialize()) // look me up
-app.use(passport.session()) // look me up
+app.use(passport.initialize())
+app.use(passport.session())
 
 passport.serializeUser((user, done) => {
   done(null, user.id)
@@ -49,19 +51,15 @@ passport.use('local-login', new LocalStrategy({
 }, (request, email, password, done) => {
   User.findByEmail(email, userData => {
     if(userData) {
-
-      // Why don't I need this? Where is "request.user" getting 
-      // created if this chunk of code isn't neccesary?
-
-      // request.session.user = {
-      //   userId: userData.id,
-      //   userEmail: userData.email,
-      //   userJoinDate: userData.timestamp
-      // }
-
-      done(null, userData)
+      bcrypt.compare(password, userData.password, (err, result) => {
+        if(result) {
+          done(null, userData)
+        } else {
+          done(null, false, request.flash('loginMessage', 'Wrong Password! Try brute-forcing some more.'))
+        }
+      })
     } else {
-      done(null, false, {message: 'No user found.'})
+      done(null, false, request.flash('loginMessage', 'No user found.'))
     }
   })
 }))
@@ -75,10 +73,12 @@ passport.use('local-signup', new LocalStrategy({
   process.nextTick(() => { // Ask Punit - how much do we need to know?
     User.findByEmail(email, userData => {
       if(userData) {
-        done(null, false, {message: 'Email already exists'})
+        done(null, false, request.flash('message', 'Email already exists'))
       } else {
-        User.addUser(email, password, result => {
-          done(null, result)
+        bcrypt.hash(password, process.env.SALT, (err, hash) => {
+          User.addUser(email, hash, result => {
+            done(null, result)
+          })
         })
       }
     })

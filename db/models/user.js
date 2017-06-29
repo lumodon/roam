@@ -9,7 +9,6 @@ module.exports = {
       RETURNING(id, email, timestamp)
     `
     query(sql, [email, password], result => {
-      console.log('THE RESULT ==-=-=-=-=-=>     ', result)
       result = result.row.substr(1, (result.row).length - 2).replace(/\"/g, '').split(',')
       callback({
         id: result[0],

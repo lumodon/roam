@@ -2,7 +2,7 @@
 <html lang="en">
   <% include partials/header %>
   <body>
-    <div>
+    <div class="container">
       <form method="post" action="/sign-in">
         <div>
           <div>
@@ -16,6 +16,13 @@
           </div>
         </div>
       </form>
+      <div>
+        <% if( message && message.length > 0) { %>
+          <div class="message info alert alert-danger">
+            <%= message || 'hi' %>
+          </div>
+        <% } %>
+      </div>
     </div>
   </body>
 </html>
